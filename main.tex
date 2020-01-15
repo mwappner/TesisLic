@@ -1,0 +1,242 @@
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt,twoside,a4paper]{article}
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.5} % Line spacing - Palatino needs more space between lines: Interlineado
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{setspace}
+%\spacing{1.5} % Espaciado entre párrafos
+
+
+%\usepackage[twoside,width=16cm,height=24cm,left=3cm]{geometry}
+\usepackage[hmarginratio=1:1,top=20mm,bottom=28mm,width=18.4cm,height=24cm,columnsep=15pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx}
+\usepackage{wrapfig} %para graficos entre texto
+\usepackage[rightcaption]{sidecap}  % para leyenda al costado de la figu
+\usepackage[nottoc]{tocbibind} % para incluir la biblografía en el índice (Table of contents)
+
+
+%----------- Agregados para el caso de ustedes -------------------------------
+\usepackage[spanish]{babel}% idioma castellano
+\usepackage[utf8]{inputenc}% esto es para poder poner los tildes directamente. Puede que cambie de versión a versión de sistema operativos (más información en http://www.aq.upm.es/Departamentos/Fisica/agmartin/webpublico/latex/FAQ-CervanTeX/FAQ-CervanTeX-6.html )
+
+
+\usepackage{graphicx} % para insertar figuras
+\usepackage{subfigure} % para insertar figuras dentro de figuras
+\usepackage{times} % plataforma
+\usepackage{amsmath} % para ecuaciones y algunos símbolos 
+\usepackage{amssymb} % para más símbolos
+\usepackage{comment} % para poder comentar secciones
+\usepackage{dsfont} % usando \mathds{} ponés letras con doble barra
+\usepackage{gensymb} % más simbolitos
+\usepackage{xfrac} % para usar \sfrac (cociente en diagonal)
+\usepackage{soul} % \st{} da texto tachado. Tiene muchas más opciones
+\usepackage{xcolor} % color de texto con \textcolor{<color>}{<texto>}, o \color{color} como environment
+%\usepackage{cite} % para citas múltiples
+
+%----------------------- Para hacer el símbolo de diámetro -------------------
+\usepackage{pict2e}
+
+\DeclareRobustCommand{\slashcirc}{{\mathpalette\doslashcirc\relax}}
+
+\makeatletter
+\newcommand\doslashcirc[2]{%
+  \sbox\z@{$#1\m@th\circ$}%
+  \setlength\unitlength{\wd\z@}
+  \begin{picture}(1,1)
+  \roundcap
+  \put(0,0){\box\z@}
+  \put(0,0){\line(1,1){1}}
+  \end{picture}%
+}
+\makeatother
+
+
+\usepackage{wasysym}
+% ---------------------- -----------------------------------------------------
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+\addto\captionsspanish{ % Modifica algunos nombres cambiandolos por los definidos a continuacion
+        \def\contentsname{Índice}%
+        \def\bibname{Bibliografía}%
+        \def\tablename{Tabla}%
+        \def\abstractname{Resumen}
+        }
+
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+%\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+%\fancyhead[C]{Tesis de licenciatura $\bullet$ Clasificador automático de especies de aves $\bullet$ 2020} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+%------------------------------------------------------------------------------
+ % Nuevos comandos (para escribir algo rápido)
+ 
+ \newcommand{\ls}{\textit{lightsheet}}
+
+
+%------------------------------------------------------------------------------
+ % Bibliografía
+\usepackage{biblatex}
+\addbibresource{bib.bib}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{20pt}{15pt}\selectfont\textbf{Cantando con pajarracos \vspace{-5mm}}} % Article title
+
+
+\author{
+\large
+\textsc{M. Wappner} \\[-4mm] %  Autores. Van entre comas y en orden alfabético
+\vspace{-4mm}
+\normalsize Director: Gabriel B. Mindlin \\
+\vspace{-4mm}
+\normalsize Laboratorio de Sistemas Dinámicos (LSD), DF, FCEyN, UBA \\ % Your institution. Filiación
+\footnotesize{
+\href{mailto:mwappner@df.uba.ar}{mwappner@df.uba.ar} % Your email address
+\vspace{-6mm}
+}}
+\date{}
+
+%----------------------------------------------------------------------------------------
+%   ÍNDICE Y SETUP
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\tableofcontents
+
+%\maketitle % Insert title
+
+\thispagestyle{fancy} % All pages have headers and footers
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+
+\vspace{-3mm}
+En este trabajo construimos redes neuronales profundas (DNNs) para la clasificación automatizada de especies de aves a parir de su canto. Implementamos una técnica nueva de aumentado de datos para el entrenamiento, que consiste en utilizar cantos sintéticos. El canto se sintetiza utilizando un modelo dinámico del aparto fonador del pájaro y alimentándolo con los parámetros adecuado. Los datos de entrenamiento para cada especie se derivan de variaciones aleatorias en los parámetros de los cantos sintéticos, inspirándose cada uno en un único canto de un individuo de cada especie. Utilizando chingolos (\textit{Zonotrichia capensis}) y benteveos (\textit{Pitangus sulphuratus}), se obtuvo un clasificador basado en redes convolucionales con eficiencia del 97\%. Esto representa una prueba de concepto satsifactoria para la idea de entrenar redes a partir de cantos sintetizados.
+\vspace{-2mm}
+
+\end{abstract}
+
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+% \begin{multicols}{2} % Two-column layout throughout the main article text
+
+\section{El problema}
+\label{sec:intro}
+
+Clasificar especies animales es importante en distintas áreas de la ecología. Lo es por un lado para fines científicos o de conservación, cuando se realizan relevamientos o seguimientos de especies, cuando se estudian la biodiversidad o hábitos reproductivos o alimentarios, entre otros ejemplo . Por otro lado es importante para fines recreativos: comunidades de personas que pasan su tiempo libre en la naturaleza catalogando sus observaciones.
+
+Esta actividad no es sólo relevante en sí misma, sino que también aporta a la concientización ambiental, un punto clave en está época de declive ambiental y calentamiento global [chequear cohesión]\autocite{Johnston}. En particular, la comunidad de observadores amateurs de aves (coloquialmente llamados \textit{birders} en inglés) es muy numerosa y se agrupa en asociaciones en todas partes el mundo. En la Argentina, la organización \textit{Aves Argentina} crea los Clubes de Observadores de Aves (COA), que cuentan con varios miles de miembros activos\autocite{OAA}.
+
+Tanto para esta actividad como para la actividad científica resulta relevante la identificación y clasificación de especies a partir de su canto. En general este proceso es laborioso y lento y requiere pericia y experiencia en el área. Ante el constante incremento de volúmenes da datos a analizar, el factor limitante en estos estudios puede resultar fácilmente el trabajo de clasificación en sí.
+
+Es aquí donde herramientas automatizadas resultan de gran utilidad. Hace ya algunos años se realizan concursos de clasificación de grabaciones con tareas de variada dificultad\autocite{DCASE, Kaggle, NIPS4B, BirdCLEF, MLL}. Estas son organizadas por entidades dedicadas a la conservación y al desarrollo de herramientas automatizadas de clasificación, en algunos casos especializadas en cantos de aves, como lo es el caso de \textit{BirdCLEF}.
+
+Las tareas más simples consisten en detectar la mera presencia o ausencia de canto de aves en la grabación. Otras piden identificar la (única) especie presente en cada grabación, o sólo la más prominente. En algunos casos, como es el de \textit{BirdCLEF} 2019, se pide localizar temporalmente todas las especies de aves presentes en una grabación prolongada (en algunos casos de hasta una hora), clasificando más de 1500 especies en 350 horas de grabación.
+
+La herramienta de aprendizaje automático o \textit{machine learning} (ver sección \ref{sec:ML}) resulta la más adecuada para resolver este tipo de tareas\autocite{Stowell, Ranjard, Koh}. Todas las entradas ganadoras que presentaron sistemas totalmente automatizados lo hicieron con distintas técnicas de machine learning. En particular, los ganadores de los últimos años utilizaron distintas técnicas de aprendizaje profundo (\textit{deep learning}) y redes neuronales. Una característica común a todas estas técnicas es que es necesaria una gran cantidad de datos iniciales con los cuales entrenar el programa para que aprenda a clasificar por sí solo. En los casos en los que la cantidad o calidad de la información no es suficiente o suficientemente diversa como para obtener resultados satiscaftorios, se recurre a aumentar artificialmente el volumen datos, lo cual se denomina aumentado de datos.
+
+En esta tesis utilizamos un tipo de red de aprendizaje profundo relativamente sencilla para clasificar cantos de dos especies presentes en la ciudad de Buenos Aires: el benteveo (\textit{Pitangus sulphuratus}) y el chingolo (\textit{Zonotrichia capensis}). Se eligió estas dos especies de aves porque ambas tienen un canto esteriotipado con poca variabilidad interespecimen e interespecie. Esto representa un escenario perfecto para probar una nueva técnica de aumentado de datos: utilizamos un modelo dinámico del aparato fonador de un pájaro para generar cantos sintéticos, inspirados en cantos reales. El aumentado de datos se genera a partir de variaciones en los parámetros de la síntesis que generan cantos cualitativamente distintos. El entrenamiento se realizó exclusivamente con cantos sintetizados, y las pruebas de eficacia de clasificación se realizaron sobre cantos reales.
+
+Lo que sigue de esta tesis está estructurada de la siguiente forma:
+\begin{compactitem}
+  \item En la sección \ref{sec:ML} presentaré la idea de aprendizaje automático y en particular de redes profundas, describiré los bloques con los que se construye una de estas redes y cómo aprenden a resolver la tarea para la que se las crea. 
+  \item En la sección \ref{sec:sintesis} hablaré sobre sintetizador de canto realista que utiliza un modelo dinámico del aparato fonador del pájaro para generaron los cantos con los que entrenar al clasificador. Detallaré el proceso utilizado para sintetizar un canto y para obtener la variabilidad necesaria para entrenar una red neuronal.
+  \item en la sección \ref{sec:resultados} describiré las redes creadas, los resultados de sus entrenamientos y detallaré las métricas utilizadas para evaluarlas.
+  \item En la sección \ref{sec:discusion} elaboraré la discusión final del trabajo, evaluando la viabilidad de esta técnica de aumentado de datos y considerando posibles aplicaciones.
+\end{compactitem} 
+
+
+\section{Redes neuronales y aprendizaje profundo}
+\label{sec:ML}
+\subsection{Aprendizaje automático}
+El aprendizaje automático (\textit{machine learning}) es una rama de la inteligencia artificial originalmente propuesta en 1995 por A. L. Samuel\autocite{Samuel}. Engloba distintos algoritmos que son capaces de resolver una tarea para la que no fueron explícitamente programada. Para esto debe pasar por una etapa de ``entrenamiento'' en la que se presenta al sistema con datos a partir de los cuales este crea un modelo matemático capaz de hacer predicciones o tomar decisiones respecto a información a la que no fue expuesto durante el entrenamiento. Es precisamente a este comportamiento al que llamamos aprendizaje: cuando el programa se desempeña mejor en una tarea a medida que gana experiencia en ella. El aprendizaje será exitoso no sólo cuando el programa pueda reproducir la tarea inicial (es decir, aprender la información con la que se lo entrenó), sino cuando pueda además obtener resultados satisfactorios con información que nunca le había sido presentada. Cuando logra esto decimos que el programa \textit{generaliza} bien. Si no lo logra, en cambio, decimos que \textit{sobreajusta}.
+
+El aprendizaje automático es aplicado en áreas tan diversas como la medicina, agricultura, finanzas, lingüística, marketing personalizado y motores de búsqueda, entre muchos otros. En las últimas décadas, sistemas de aprendizaje automático vencieron a maestros del go\autocite{Silver} y de videojuegos\autocite{peng}, realizaron diagnósticos automatizados y reconocimiento automático de habla en asistentes virtuales, crearon videos falsificados extremadamente creíbles\autocite{Schwartz}, y son el alma detrás de los sistemas de navegación automática de los autos sin conductor y del sistema de recomendaciones de servicios de entretenimiento como Netflix\autocite{Bell} y YouTube\autocite{Covington}. En función de qué tarea se desee resolver, se eligirá un algoritmo distinto. La lista de estos algoritmos es extensa, por lo que sólo voy a hablar brevemente sobre dos de ellos: el aprendizaje supervisado y el no supervisado.
+
+% diagnósticos, siri/google/alexa, 
+% slef-driving, 
+
+En el primer caso, la información de entrenamiento que se entrega al sistema viene apareada con el resultado que se desea obtener. Tomando por ejemplo el caso de un clasificador automático de imágenes de animales, cada imagen viene apareada con el nombre de la clase a la que se la quiere asociar (una imagen de elefante con la etiqueta ``elefante''). El entrenamiento consiste entonces en lograr que el programa aprenda a asociar la imagen con la clase deseada. Siguiendo este ejemplo, los algoritmos de aprendizaje no supervisado toman las imágenes, pero no las clases, de modo que deben poder extraer las características de las imágenes por sí solos y así agruparlas en clases sin etiquetas. La información devuelta por este tipo de sistemas deberá ser posteriormente interpretada por el usuario, a diferencia de la devuelta por los sistemas supervisados, que es procesada por humanos previo a entregársela al sistema.
+
+Debemos notar que las predicciones o decisiones que toma el sistema son sólo tan buenas como la información con la que fue entrenado. Cualquier sesgo presente en el conjunto de datos inicial será reproducido por el programa una vez entrenado. Esto es algo que, en lo posible, debemos tener en cuenta al construir o elegir nuestros datos de entrenamiento.
+
+\subsection{Aprendizaje profundo}
+
+\section{Síntesis de cantos}
+\label{sec:sintesis}
+
+\section{Diseño de CNNs y entrenamiento}
+\label{sec:resultados}
+
+\section{Discusión}
+\label{sec:discusion}
+
+
+%---------------------------------------------------------------------------------------
+%BIBLIOGRAFÍA
+\printbibliography[heading=bibintoc]
+
+\begin{comment}
+\begin{thebibliography}{99}
+
+\bibitem{Johnston}
+A. Johnston et al. (2013) ``\textit{ Observed and predicted effects of climate change on species abundance in protected areas}''.. Nature Climate Change, 3, 1055–1061. \url{https://doi.org/10.1038/NCLIMATE2035}
+
+\bibitem{Stowell}
+D. Stowell et al. (2018). ``\textit{Automatic acoustic detection of birds through deep learning: The first Bird Audio Detection challenge}''. Methods in Ecology and Evolution, 10(3), 368–380. \url{https://doi.org/10.1111/2041-210x.13103}
+
+\bibitem{Ranjard}
+L. Ranjard, et al. (2008). ``\textit{Unsupervised bird song syllable classification using evolving neural networks}''. The Journal of the Acoustical Society of America, 123(6), 4358–4368. https://doi.org/10.1121/1.2903861
+
+\bibitem{OAA}
+Organización Aves Argentinas, y COA: \url{https://www.avesargentinas.org.ar/quiénes-somos-0}
+
+\bibitem{DCASE}
+Competencias \textit{Bird Audio Detection}, organizadas anualmente desde 2016 por \textit{Detection and Classification of Acoustic Scenes and Events}: DCASE. \url{http://dcase.community.}
+
+\bibitem{Kaggle}
+Competencia anual de clasificación de Kaggle. En 2013 la tarea fue clasificación de cantos de aves. \url{https://www.kaggle.com/c/mlsp-2013-birds}
+
+\bibitem{NIPS4B}
+COmpetencia anual de \textit{Neural Information Processing Scaled for Bioacoustics}: NIPS4B, que en 2013 consistió en clasificación de cantos de aves. \url{https://figshare.com/articles/Transcriptions_of_NIPS4B_2013_Bird_Challenge_Training_Dataset/6798548}
+
+\bibitem{MLL}
+Versión extendida de la competencia \textit{Bird Audio Detection} organizada por DCASE\cite{DCASE} en colaboración con \textit{IEEE Signal Processing Society}. \url{http://machine-listening.eecs.qmul.ac.uk/bird-audio-detection-challenge/}
+
+\bibitem{BirdCLEF}
+Competencia anual \textit{BirdCLEF} organizada por \textit{Cross Language Evaluation Forum}: CLEFF. \url{https://www.imageclef.org/BirdCLEF2019}
+
+\end{thebibliography}
+\end{comment}
+
+% \end{multicols}
+
+\end{document}
